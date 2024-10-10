@@ -123,7 +123,7 @@ export const getEntryFoldersByPath = (path) => {
 
   return get(allEntryFolders).filter(({ filePathMap, folderPath, parserConfig }) =>
     folderPath
-      ? path.startsWith(folderPath) && getFileExtension(parserConfig) === extension
+      ? path.startsWith(`${folderPath}/`) && getFileExtension(parserConfig) === extension
       : Object.values(filePathMap ?? {}).includes(path),
   );
 };
