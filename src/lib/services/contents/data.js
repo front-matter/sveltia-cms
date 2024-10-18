@@ -1,4 +1,5 @@
 import { get, writable } from 'svelte/store';
+import { allAssets } from '$lib/services/assets';
 import { backend } from '$lib/services/backends';
 import { allEntries, selectedCollection } from '$lib/services/contents';
 
@@ -6,10 +7,10 @@ import { allEntries, selectedCollection } from '$lib/services/contents';
  * @type {import('svelte/store').Writable<UpdatesToastState>}
  */
 export const contentUpdatesToast = writable({
-  count: 1,
   saved: false,
-  deleted: false,
   published: false,
+  deleted: false,
+  count: 1,
 });
 
 /**
@@ -50,5 +51,15 @@ export const deleteEntries = async (ids, assetPaths = []) => {
   });
 
   allEntries.set(_allEntries.filter((file) => !ids.includes(file.id)));
-  contentUpdatesToast.set({ deleted: true, count: ids.length });
+
+  contentUpdatesToast.set({
+    saved: false,
+    published: false,
+    deleted: true,
+    count: ids.length,
+  });
+
+  if (assetPaths.length) {
+    allAssets.update((assets) => assets.filter((asset) => !assetPaths.includes(asset.path)));
+  }
 };

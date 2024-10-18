@@ -116,7 +116,7 @@
     <h4>{$_('public_url')}</h4>
     <p>
       {#if publicURL}
-        <a href={publicURL}>{publicURL}</a>
+        <a href={publicURL} target="_blank">{publicURL}</a>
       {:else}
         –
       {/if}
@@ -201,7 +201,7 @@
 
     h4 {
       font-size: var(--sui-font-size-small);
-      font-weight: 600;
+      font-weight: var(--sui-font-weight-bold);
       color: var(--sui-secondary-foreground-color);
     }
   }
